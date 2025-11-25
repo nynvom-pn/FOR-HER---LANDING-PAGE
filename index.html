@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOR HER - Custom Charm Móc Khóa</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #fff5f7;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 100%;
+            margin: 0 200px;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            min-height: 100vh;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Banner */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            max-height: 800px;
+            overflow: hidden;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .banner-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .banner-content h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .banner-content p {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            opacity: 0.95;
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px 50px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #e91e63;
+            margin-bottom: 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('2010.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .hero-overlay {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+            padding: 60px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .hero-text {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .hero-text p {
+            margin-bottom: 15px;
+        }
+
+        .chuc-mung {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #450017;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Products Section */
+        .products {
+            background: #fffafb;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            border-radius: 10px 10px 0 0;
+            background-color: #f5f5f5;
+        }
+
+        .product-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            color: #e91e63;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .product-info p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Form Section */
+        .order-form {
+            background: white;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #e91e63;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ffc1cc;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fffafb;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e91e63;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #e91e63;
+            color: white;
+            text-align: center;
+            padding: 30px 50px;
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e91e63;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 0 20px;
+            }
+            
+            .section {
+                padding: 40px 25px;
+            }
+            
+            .banner {
+                height: 50vh;
+                min-height: 300px;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                margin: 0 10px;
+                border-radius: 5px;
+            }
+            
+            .section {
+                padding: 30px 15px;
+            }
+            
+            .banner {
+                height: 40vh;
+                min-height: 250px;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Banner Section -->
+        <section class="banner">
+            <img src="/assets/2010 (1).png" alt="FOR HER - To have you on the love" class="banner-image">
+        </section>
+
+            <!-- Hero Section -->
+<section class="section hero" style="background-image: url('/assets/2010.png');">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <h2 class="section-title">" For her" - For the woman we love</h2>
+            <div class="hero-text">
+                <p style="font-size: 2rem; font-weight: bold; color: #450017; text-align: center; margin-top: -30px;">
+    Chúc mừng Ngày Phụ Nữ Việt Nam 20/10
+</p>
+                <p>Tiny Tags ra mắt BST "FOR HER" như một lời tri ân đến phái đẹp - một nửa thế giới của chúng ta. Bộ sưu tập bao gồm chiếc charm nhỏ xinh được tạo nên từ yêu thương và sự tinh tế nhất</p>
+                <p>Tặng mẹ, tặng nàng hay tặng bản thân mình đều được, vì ai cũng xứng đáng được yêu thương</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Products Section -->
+        <section class="section products">
+            <h2 class="section-title">Sản phẩm</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="/assets/z7260437942103_8f06f0dc628c7f514dabd56897893b0c.jpg" class="product-image">
+                    <div class="product-info">
+                        <h3>Charm móc khóa custom tên (4 chữ)</h3>
+                        <p>Custom theo theo tên của bạn, màu ngẫu nhiên</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="/assets/z7260437946382_2d951a5d10e4025e6c7adb09f072699f.jpg" class="product-image">
+                    <div class="product-info">
+                        <h3>Charm móc khóa thông điệp (hơn 4 chữ)</h3>
+                        <p>Thông điệp ý nghĩa của riêng bạn</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="/assets/z7260437929402_f0898c93932a4cd510abc2c11363dd59.jpg" class="product-image">
+                    <div class="product-info">
+                        <h3>Charm móc khóa custom tone sur tone</h3>
+                        <p>Charm custom theo 1 tone màu chủ đạo</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="/assets/z7260437877981_c61215aa1acac2a14c00e222f5a32922.jpg" class="product-image">
+                    <div class="product-info">
+                        <h3>Dây charm điện thoại</h3>
+                        <p>Có 2 size lớn và nhỏ, phù hợp từng nhu cầu khác nhau, nhận thêm charm chữ nhỏ</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Form Section -->
+        <section class="section order-form">
+            <h2 class="section-title">Đặt hàng tại đây</h2>
+            <div class="form-container">
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="fullName">Họ và tên *</label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Nhập họ và tên đầy đủ">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="email@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="0900 123 456">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product">Mẫu sản phẩm *</label>
+                        <select id="product" name="product" required>
+                            <option value="">-- Chọn sản phẩm --</option>
+                            <option value="Charm móc khóa custom tên (4 chữ)">Charm móc khóa custom tên (4 chữ)</option>
+                            <option value="Charm móc khóa thông điệp (hơn 4 chữ)">Charm móc khóa thông điệp (hơn 4 chữ)</option>
+                            <option value="Charm móc khóa custom tone sur tone">Charm móc khóa custom tone sur tone</option>
+                            <option value="Dây charm điện thoại">Dây charm điện thoại</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerRequest">Yêu cầu chi tiết</label>
+                        <textarea id="customerRequest" name="customerRequest" rows="4" placeholder="Mô tả yêu cầu chi tiết về thiết kế, màu sắc, thông điệp, kích thước..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deliveryTime">Thời gian muốn nhận hàng *</label>
+                        <input type="date" id="deliveryTime" name="deliveryTime" required>
+                    </div>
+                    
+                    <div class="loading" id="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Đang gửi đơn hàng...</p>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">ĐẶT HÀNG NGAY</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p>FOR HER - Bộ sưu tập hoàn thiện | Facebook: Tiny Tags | Email: tinytags.store@gmail.com</p>
+        </footer>
+    </div>
+
+    <script>
+        // KHỞI TẠO EMAILJS VỚI KEY CỦA BẠN
+        emailjs.init('zcP322gdjWYAgoCvk');
+        
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const originalText = submitBtn.textContent;
+            
+            // Hiển thị loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'ĐANG XỬ LÝ...';
+            loading.style.display = 'block';
+            
+            // Lấy dữ liệu form
+            const templateParams = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                product: document.getElementById('product').value,
+                customerRequest: document.getElementById('customerRequest').value,
+                deliveryTime: document.getElementById('deliveryTime').value,
+                timestamp: new Date().toLocaleString('vi-VN')
+            };
+            
+            console.log('Sending data:', templateParams);
+            
+            // Gửi qua EmailJS
+            emailjs.send('service_i1i7kdn', 'template_1k16owi', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('🎉 ĐẶT HÀNG THÀNH CÔNG!\n\nCảm ơn ' + templateParams.fullName + ' đã đặt hàng!\nChúng tôi sẽ liên hệ với bạn qua số điện thoại ' + templateParams.phone + ' trong thời gian sớm nhất.');
+                    
+                    // Reset form
+                    document.getElementById('orderForm').reset();
+                    
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('❌ CÓ LỖI XẢY RA!\n\nKhông thể gửi đơn hàng ngay lúc này. Vui lòng thử lại sau hoặc liên hệ trực tiếp qua Facebook: Tiny Tags');
+                })
+                .finally(() => {
+                    // Khôi phục button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    loading.style.display = 'none';
+                });
+        });
+
+        // Set min date cho delivery time (ngày mai)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('deliveryTime').min = tomorrow.toISOString().split('T')[0];
+
+        // Set max date (3 tháng sau)
+        const maxDate = new Date();
+        maxDate.setMonth(maxDate.getMonth() + 3);
+        document.getElementById('deliveryTime').max = maxDate.toISOString().split('T')[0];
+    </script>
+</body>
+</html>
